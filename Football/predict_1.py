@@ -1,28 +1,20 @@
 #predict.py
 
 import read_data
-from standings import results, standings
 import pandas as pd
 
 # Putting season data in dataframes
 url_pl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2018-19/en.1.json'
 data = read_data.season_data(url_pl)
 url_pl_teams = 'https://raw.githubusercontent.com/openfootball/football.json/master/2018-19/en.1.clubs.json'
-teams = read_data.teams_data(url_pl_teams)
-res = results(teams, data)
-stand = standings(res)
-
-# Printing analysis graphs
-import matplotlib as plt
-res_df = pd.DataFrame(res)
-#res_df_tp = res_df.set_index('name').T.sort_index()
+teams = pd.DataFrame(read_data.teams_data(url_pl_teams))
 
 # Adding a column with teams ids
-# data = pd.DataFrame(data)
-# data = data.merge(teams[['code','team_id']], left_on='home_team', right_on='code', how='left')
-# data = data.rename(columns = {'team_id': 'home_id'}).drop('code', axis=1)
-# data = data.merge(teams[['code','team_id']], left_on='away_team', right_on='code', how='left')
-# data = data.rename(columns = {'team_id': 'away_id'}).drop('code', axis=1)
+data = pd.DataFrame(data)
+data = data.merge(teams, left_on='home_team', right_on='name', how='left')
+data = data.rename(columns = {'team_id': 'home_id', 'name_x':'name'}).drop(['code','key','name_y'], axis=1)
+data = data.merge(teams, left_on='away_team', right_on='name', how='left')
+data = data.rename(columns = {'team_id': 'away_id', 'name_x':'name'}).drop(['code','key','name_y'], axis=1)
 
 # import numpy as np
 # import pymc3 as pymc

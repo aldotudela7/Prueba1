@@ -5,7 +5,7 @@ def unique_list(dic, column):
     unique = list(set(raw_list))
     return unique
 
-def plotGoals(results, team_code):
+def plotGoals(results, team_name):
     '''
     Print a line graph showing goals scored and goals received
     for a specific team using its 3-letter code.
@@ -15,11 +15,11 @@ def plotGoals(results, team_code):
     gdiff = []
     teams = []
 
-    matchdays = [i for i in range(1, 36, 1)]
+    matchdays = [i for i in range(1, 39, 1)]
     for team in results:
-        if team['code'] == team_code:
+        if team['name'] == team_name:
             for matchday in matchdays:
-                teams.append(team['code'])
+                teams.append(team['name'])
                 try:
                     gf.append(team['gf_'+str(matchday)])
                     ga.append(-team['ga_'+str(matchday)])
@@ -34,7 +34,8 @@ def plotGoals(results, team_code):
     fig = plt.figure()
     ax = fig.add_subplot()
     ax.set_ylabel('Goals')
-    ax.set_title('Goals scored per match')
+    title = 'Goals scored per match: '+team_name
+    ax.set_title(title)
 
     ax.plot(matchdays, gf, color='green')
     ax.plot(matchdays, ga, color='red')

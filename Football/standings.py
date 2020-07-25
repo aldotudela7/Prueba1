@@ -22,7 +22,7 @@ def results(teams, season):
         for matchday in matchdays:
             for result in season:
                 if matchday == result['name']:
-                    if team['code'] == result['home_team']:
+                    if team['name'] == result['home_team']:
                         if result['home_win']:
                             team[matchday] = 'win'
                             team['type_'+matchday.split(' ')[1]] = 'home'
@@ -60,7 +60,7 @@ def results(teams, season):
                             team['losses'] +=1
                         else:
                             team[matchday] = None
-                    elif team['code'] == result['away_team']:
+                    elif team['name'] == result['away_team']:
                         if result['away_win']:
                             team[matchday] = 'win'
                             team['type_'+matchday.split(' ')[1]] = 'away'
@@ -107,7 +107,7 @@ data = read_data.season_data(url_pl)
 url_pl_teams = 'https://raw.githubusercontent.com/openfootball/football.json/master/2019-20/en.1.clubs.json'
 teams = read_data.teams_data(url_pl_teams)
 res = results(teams, data)
-plotGoals(res, 'LIV')
+plotGoals(res, 'Arsenal FC')
 columns = ['name', 'played', 'wins', 'ties', 'losses', 'points', 'gdiff']
 printTable(res, columns)
 

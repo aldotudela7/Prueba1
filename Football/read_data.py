@@ -35,12 +35,15 @@ def season_data(season_url):
     matches = []
     for matchday in pl:
         for game in matchday['matches']:
-            match = {'name': matchday['name'],
+            if 'score' in game.keys():
+                match = {'name': matchday['name'],
                      'date': game['date'],
-                     'home_team': game['team1']['code'],
-                     'away_team': game['team2']['code'],
-                     'home_score': game['score1'],
-                     'away_score': game['score2'],}
+                     'home_team': game['team1'],
+                     'away_team': game['team2'],
+                     'home_score': game['score']['ft'][0],
+                     'away_score': game['score']['ft'][1],}
+            else:
+                continue
             if (match['home_score']==None) or (match['away_score']==None):
                 match['home_win'] = None
                 match['away_win'] = None
@@ -61,7 +64,7 @@ def season_data(season_url):
     return matches
 
 def main(args):
-    url_pl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2019-20/en.1.json'
+    url_pl = 'https://raw.githubusercontent.com/openfootball/football.json/master/2018-19/en.1.json'
     return season_data(url_pl)
 
 if __name__ == '__main__':
