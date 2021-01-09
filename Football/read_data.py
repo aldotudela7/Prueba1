@@ -31,36 +31,35 @@ def season_data(season_url):
     Reads the Premiere League results from the openfootball
     database and creates a list of dictionaries for each match.
     '''
-    pl = read_json_api(season_url)['rounds']
+    pl = read_json_api(season_url)['matches']
     matches = []
     for matchday in pl:
-        for game in matchday['matches']:
-            if 'score' in game.keys():
-                match = {'name': matchday['name'],
-                     'date': game['date'],
-                     'home_team': game['team1'],
-                     'away_team': game['team2'],
-                     'home_score': game['score']['ft'][0],
-                     'away_score': game['score']['ft'][1],}
-            else:
-                continue
-            if (match['home_score']==None) or (match['away_score']==None):
+        if 'score' in matchday.keys():
+            match = {'name': matchday['round'],
+                     'date': matchday['date'],
+                     'home_team': matchday['team1'],
+                     'away_team': matchday['team2'],
+                     'home_score': matchday['score']['ft'][0],
+                     'away_score': matchday['score']['ft'][1],}
+        else:
+            continue
+        if (match['home_score']==None) or (match['away_score']==None):
                 match['home_win'] = None
                 match['away_win'] = None
                 match['tie'] = None
-            elif match['home_score'] > match['away_score']:
+        elif match['home_score'] > match['away_score']:
                 match['home_win'] = True
                 match['away_win'] = False
                 match['tie'] = False
-            elif match['home_score']<match['away_score']:
+        elif match['home_score']<match['away_score']:
                 match['home_win'] = False
                 match['away_win'] = True
                 match['tie'] = False
-            else:
+        else:
                 match['home_win'] = False
                 match['away_win'] = False
                 match['tie'] = True
-            matches.append(match)
+        matches.append(match)
     return matches
 
 def main(args):
