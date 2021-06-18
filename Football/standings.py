@@ -107,7 +107,7 @@ data = read_data.season_data(url_pl)
 url_pl_teams = 'https://raw.githubusercontent.com/openfootball/football.json/master/2019-20/en.1.clubs.json'
 teams = read_data.teams_data(url_pl_teams)
 res = results(teams, data)
-plotGoals(res, 'Arsenal FC')
+plotGoals(res, 'Liverpool FC')
 columns = ['name', 'played', 'wins', 'ties', 'losses', 'points', 'gdiff']
 printTable(res, columns)
 

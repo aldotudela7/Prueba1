@@ -29,23 +29,14 @@ def plotGoals(results, team_name):
                     ga.append(None)
                     gdiff.append(None)
 
-    
     import matplotlib.pyplot as plt
-    fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.set_ylabel('Goals')
+    plt.figure()
     title = 'Goals scored per match: '+team_name
-    ax.set_title(title)
-
-    ax.plot(matchdays, gf, color='green')
-    ax.plot(matchdays, ga, color='red')
-    ax.plot(matchdays, gdiff, color='black')
-
-    for label in ax.xaxis.get_ticklabels():
-        label.set_rotation(90)
-        label.set_fontsize(8)
-    
-    plt.tight_layout()
+    plt.title(title)
+    plt.ylabel('Goals')
+    plt.plot(matchdays, gf, color='green')
+    plt.plot(matchdays, ga, color='red')
+    plt.plot(matchdays, gdiff, color='black')
     plt.show()
 
 def printTable(myDict, colList=None):
